@@ -53,13 +53,42 @@ def update(id):
         task.content = request.form["content"]
 
         try:
-            db.session.commit()
             return redirect("/")        # homepage redirect
         except:
             return "There was an issue updating your task"
 
     else:
         return render_template("update.html", task=task)    # to render
+
+
+@app.route("/calendar/")
+def calendar():
+
+    # if request.method == "POST":
+    #
+    #     try:
+    #         db.session.commit()
+    #         return redirect("/")        # homepage redirect
+    #     except:
+    #         return "There was an issue updating your task"
+    #
+    # else:
+    return render_template("json.html")    # to render
+
+
+# @app.route('/')
+# def calendar():
+#     return render_template("json.html")
+
+
+@app.route('/calendar/data')
+def return_data():
+    start_date = request.args.get('start', '')
+    end_date = request.args.get('end', '')
+
+    with open("events.json", "r") as input_data:
+        return input_data.read()
+
 
 
 if __name__ == "__main__":
